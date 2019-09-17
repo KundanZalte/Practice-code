@@ -1,0 +1,55 @@
+using System;
+using System.Threading;
+public class Singleton
+ {
+    private static Singleton instance;
+	public int data=5;
+	private static readonly object mylock = new object();
+    private Singleton() { }
+
+       public static Singleton calling()
+        {
+	     
+			   lock(mylock)
+			 {
+       
+                if (instance == null)
+                    instance = new Singleton();
+                return instance;
+            }
+	       
+        }
+	
+	public static int run()
+	{
+		return 5;
+		//Console.WriteLine("hi");
+	}
+		public static void Main()
+	{
+			Singleton j=null,i=null;
+		//var inst=Singleton.calling;
+			//inst.data=6;
+			
+		//var inst2=Singleton.Instance;	
+			//inst.data=8;
+			
+			//int ans=inst.data;
+			//int ans1=inst.data;
+			Thread t1=new Thread(()=>{ j=Singleton.calling();});
+			t1.Start();
+			Thread t2=new Thread(()=>{ i=Singleton.calling();});
+			t2.Start();
+			Thread.Sleep(2000);
+
+			//FirstThread.Start();
+			//Thread.Sleep(2000);
+		//Console.WriteLine("First Call"+ans);
+		//Console.WriteLine("Second Call"+ans1);
+			Console.WriteLine("Second Call"+i.data);
+			Console.WriteLine("Second Call"+j.data);
+	}
+    
+}
+
+
